@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15.472" height="14.63" viewBox="0 0 15.472 14.63">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #676f75;
+        stroke-width: 0.5px;
+      }
+    </style>
+  </defs>
+  <g id="Group_700" data-name="Group 700" transform="translate(-1106.75 -533.121)">
+    <path id="_ionicons_svg_md-person" class="cls-1" d="M70,70a3,3,0,1,0-3-3A3.009,3.009,0,0,0,70,70Zm0,1.5c-1.987,0-6,1.013-6,3V76H76V74.5C76,72.513,71.987,71.5,70,71.5Z" transform="translate(1043 471.501)"/>
+    <path id="Union_24" data-name="Union 24" class="cls-1" d="M693,1086h0v0h0v0Z" transform="translate(1397.286 -721.993) rotate(45)"/>
+  </g>
+</svg>

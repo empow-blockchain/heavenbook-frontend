@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="386.955" height="53.002" viewBox="0 0 386.955 53.002">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.129" y1="0.596" x2="0.867" y2="0.591" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f94f4f"/>
+      <stop offset="1" stop-color="#8e3ddf"/>
+    </linearGradient>
+  </defs>
+  <g id="Subtraction6" transform="translate(11.956)">
+    <path id="Subtraction_6" data-name="Subtraction 6" d="M3105-7608c-18.342,0-36.648-.558-54.411-1.659-17.244-1.069-34.17-2.664-50.308-4.742-15.812-2.04-30.934-4.554-44.947-7.471-13.879-2.892-26.776-6.205-38.334-9.849V-7661h375v29.594c-2.883.9-5.847,1.777-8.809,2.612-11.408,3.214-23.956,6.131-37.3,8.67-13.46,2.563-27.862,4.766-42.805,6.547A833.4,833.4,0,0,1,3105-7608Z" transform="translate(-2917 7661)" fill="url(#linear-gradient)"/>
+    <g id="Group_7825" data-name="Group 7825" transform="translate(-127 -379)">
+      <circle id="Ellipse_3575" data-name="Ellipse 3575" cx="1.001" cy="1.001" r="1.001" transform="translate(139.044 394.914)" fill="#fff"/>
+      <circle id="Ellipse_3576" data-name="Ellipse 3576" cx="1.001" cy="1.001" r="1.001" transform="translate(192.044 411.914)" fill="#fff"/>
+      <circle id="Ellipse_3577" data-name="Ellipse 3577" cx="0.501" cy="0.501" r="0.501" transform="translate(115.044 421.914)" fill="#fff"/>
+      <circle id="Ellipse_3578" data-name="Ellipse 3578" cx="0.501" cy="0.501" r="0.501" transform="translate(313.044 386.914)" fill="#fff"/>
+      <g id="Group_7823" data-name="Group 7823" transform="translate(163 202)">
+        <path id="Path_7244" data-name="Path 7244" d="M.979.653V0H.653V.653H0V.979H.653v.653H.979V.979h.653V.653Z" transform="translate(55.933 183.099) rotate(28)" fill="#fff" fill-rule="evenodd"/>
+      </g>
+      <g id="Group_7824" data-name="Group 7824" transform="translate(109 245)">
+        <path id="Path_7244-2" data-name="Path 7244" d="M.577.385V0H.385V.385H0V.577H.385V.962H.577V.577H.962V.385Z" transform="translate(55.619 183.099) rotate(28)" fill="#fff" fill-rule="evenodd"/>
+      </g>
+    </g>
+    <g id="Group_7823-2" data-name="Group 7823" transform="translate(217 -179)">
+      <path id="Path_7244-3" data-name="Path 7244" d="M1.446.964V0H.964V.964H0v.482H.964v.964h.482V1.446h.964V.964Z" transform="translate(56.298 183.099) rotate(28)" fill="#fff" fill-rule="evenodd"/>
+    </g>
+    <circle id="Ellipse_3575-2" data-name="Ellipse 3575" cx="0.501" cy="0.501" r="0.501" transform="translate(274.044 21.914)" fill="#fff"/>
+    <g id="Group_7824-2" data-name="Group 7824" transform="translate(163 -138.148)">
+      <path id="Path_7244-4" data-name="Path 7244" d="M1.53,1.02V0H1.02V1.02H0v.51H1.02v1.02h.51V1.53h1.02V1.02Z" transform="translate(56.364 183.099) rotate(28)" fill="#fff" fill-rule="evenodd"/>
+    </g>
+    <circle id="Ellipse_3577-2" data-name="Ellipse 3577" cx="0.501" cy="0.501" r="0.501" transform="translate(117.044 42.914)" fill="#fff"/>
+    <circle id="Ellipse_3576-2" data-name="Ellipse 3576" cx="1.001" cy="1.001" r="1.001" transform="translate(323.044 34.914)" fill="#fff"/>
+    <circle id="Ellipse_3578-2" data-name="Ellipse 3578" cx="0.501" cy="0.501" r="0.501" transform="translate(367.044 5.914)" fill="#fff"/>
+  </g>
+</svg>

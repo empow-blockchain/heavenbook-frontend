@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="9.192" height="9.192" viewBox="0 0 9.192 9.192">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #dd3468;
+      }
+    </style>
+  </defs>
+  <g id="Union_22" data-name="Union 22" transform="translate(-1123.889 -433.889)">
+    <line id="Line_63" data-name="Line 63" class="cls-1" x2="12" transform="translate(1124.242 434.243) rotate(45)"/>
+    <line id="Line_64" data-name="Line 64" class="cls-1" x2="12" transform="translate(1132.727 434.243) rotate(135)"/>
+  </g>
+</svg>

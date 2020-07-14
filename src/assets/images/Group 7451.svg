@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="32" height="32" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_7451" data-name="Group 7451" transform="translate(-731 -308)">
+    <g id="envelope" transform="translate(738 263.016)">
+      <g id="Group_570" data-name="Group 570" transform="translate(0 54.82)">
+        <path id="Path_1949" data-name="Path 1949" d="M1.754,58.516q.347.2,2.09,1.214t2.671,1.554l.433.26q.331.2.551.324t.53.277a3.386,3.386,0,0,0,.586.23,1.9,1.9,0,0,0,.51.077h.021a1.906,1.906,0,0,0,.51-.077,3.389,3.389,0,0,0,.586-.23q.311-.153.53-.277t.551-.324q.331-.2.433-.26l4.771-2.768a4.522,4.522,0,0,0,1.244-1.048,2.009,2.009,0,0,0,.5-1.286,1.211,1.211,0,0,0-.484-.962,1.744,1.744,0,0,0-1.147-.4H1.631a1.592,1.592,0,0,0-1.208.443A1.54,1.54,0,0,0,0,56.37a1.819,1.819,0,0,0,.561,1.163A4.76,4.76,0,0,0,1.754,58.516Z" transform="translate(0 -54.82)" fill="none" stroke="#676f75" stroke-width="1"/>
+        <path id="Path_1950" data-name="Path 1950" d="M17.251,185.261q-3.344,2.1-5.077,3.266-.581.4-.943.62a6,6,0,0,1-.963.454,3.126,3.126,0,0,1-1.121.232H9.125A3.127,3.127,0,0,1,8,189.6a6,6,0,0,1-.963-.454q-.362-.222-.943-.62-1.376-.937-5.067-3.266A5.31,5.31,0,0,1,0,184.437v7.516a1.408,1.408,0,0,0,.479,1.07,1.633,1.633,0,0,0,1.152.445H16.639a1.633,1.633,0,0,0,1.152-.445,1.408,1.408,0,0,0,.479-1.07v-7.516A5.522,5.522,0,0,1,17.251,185.261Z" transform="translate(0 -181.804)" fill="none" stroke="#676f75" stroke-width="1"/>
+      </g>
+    </g>
+    <g id="Repeat_Grid_1" data-name="Repeat Grid 1" transform="translate(731 308)" clip-path="url(#clip-path)">
+      <g transform="translate(-731 -308)">
+        <circle id="vanvan" cx="15.5" cy="15.5" r="15.5" transform="translate(731.5 308.5)" fill="none" stroke="#676f75" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

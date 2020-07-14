@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.3" height="12.5" viewBox="0 0 11.3 12.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #707070;
+        stroke-width: 0.5px;
+      }
+    </style>
+  </defs>
+  <g id="notifications-button2" transform="translate(-38 0.25)">
+    <g id="notifications" transform="translate(38.25)">
+      <path id="Path_1948" data-name="Path 1948" class="cls-1" d="M43.65,12a1.24,1.24,0,0,0,1.271-1.2H42.379A1.24,1.24,0,0,0,43.65,12Zm4.129-3.6V5.1A3.915,3.915,0,0,0,44.6,1.32V.9A.954.954,0,0,0,42.7.9v.42A3.915,3.915,0,0,0,39.521,5.1V8.4L38.25,9.6v.6h10.8V9.6Z" transform="translate(-38.25)"/>
+    </g>
+  </g>
+</svg>
