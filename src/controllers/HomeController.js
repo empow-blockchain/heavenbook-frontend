@@ -136,7 +136,7 @@ class HomeController extends Component {
                                                 return (
                                                     <div className="top-user">
                                                         <figure>
-                                                            <img src={value.photos[0]["320"]} alt="" />
+                                                            <img src={value.photos[0]["670"]} alt="" />
                                                         </figure>
                                                         <div className="info-post">
                                                             <span className="name-user">

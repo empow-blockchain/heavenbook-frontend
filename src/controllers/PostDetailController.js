@@ -54,7 +54,7 @@ class PostDetailController extends Component {
                 <div className="box-shadow-2 profile profile-client">
                     <div className="top-user">
                         <figure>
-                            <img src={postDetail.photos[0]["320"]} alt="" />
+                            <img src={postDetail.photos[0]["670"]} alt="" />
                         </figure>
                         <div className="info-post">
                             <span className="name-user">{postDetail.name.name}</span>

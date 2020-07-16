@@ -5,6 +5,8 @@ import Post from '../components/Post'
 import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI';
 import Utils from '../utils/index'
+import { EMSCAN, EMPOW } from '../constants/index'
+import Avatar from '../assets/images/avatar.svg'
 class AccountController extends Component {
 
     constructor(props) {
@@ -63,29 +65,34 @@ class AccountController extends Component {
     renderInfo() {
         var { myAccountInfo, myAddress } = this.props
         var profile = myAccountInfo.profile || {}
-        var avatar = profile.avatar120 ? profile.avatar120 : (profile.avatar ? profile.avatar : "/img/avt-profile.png")
+        var avatar = profile.avatar120 ? profile.avatar120 : (profile.avatar ? profile.avatar : Avatar)
         return (
             <div className="col-12 col-lg-3 col-xl-3">
                 <div className="box-shadow-2 profile">
                     <div className="top-user">
                         <figure>
-                            <img src={avatar} style={{width: 50, height: 50, borderRadius: 8}} alt="" />
+                            <img src={avatar} style={{ width: 50, height: 50, borderRadius: 8 }} alt="" />
                         </figure>
                         <div className="info-post">
                             <span className="name-user">
-                                {myAccountInfo.selected_username ? myAccountInfo.selected_username : myAddress + '...'}
+                                {myAccountInfo.selected_username ? myAccountInfo.selected_username : (myAddress ? myAddress.substring(0,10) + '...' : '...' )}
                             </span>
                             <span className="date">{Utils.formatCurrency(myAccountInfo.total_post_reward)} EM</span>
                         </div>
                     </div>
                     <div className="group-em">
                         <button className="rename">
-                            <span>{LanguageService.changeLanguage('Rename')}</span>
-                            <img src="/img/Group 8341.png" alt="" />
+                            <a href={`${EMPOW}/setting`} target="_blank" style={{ color: 'white' }}>
+                                <span>{LanguageService.changeLanguage('Rename')}</span>
+                                <img src="/img/Group 8341.png" alt="" />
+                            </a>
                         </button>
                         <button className="stack-em">
-                            <span>{LanguageService.changeLanguage('Stake')} EM</span>
-                            <img src="/img/Group 8341.png" alt="" />
+                            <a href={`${EMSCAN}/wallet/stake`} target="_blank" style={{ color: 'white' }}>
+                                <span>{LanguageService.changeLanguage('Stake')} EM</span>
+                                <img src="/img/Group 8341.png" alt="" />
+                            </a>
+
                         </button>
                     </div>
                 </div>

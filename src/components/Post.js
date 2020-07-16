@@ -642,7 +642,7 @@ class Post extends Component {
                     <Link href="/post/[postId]" as={`/post/${post.postId}`}>
                         <a href={`/post/${post.postId}`}>
                             <div className="top-user">
-                                <div className="waper-avatar" style={{ backgroundImage: `url(${post.photos[0]["320"]})`, marginRight: 10 }}>
+                                <div className="waper-avatar" style={{ backgroundImage: `url(${post.photos[0]["670"]})`, marginRight: 10 }}>
 
                                 </div>
                                 <div className="info-post">

@@ -38,7 +38,7 @@ class Navbar extends Component {
     componentDidMount() {
         var { postDetail } = this.props
         if (postDetail) {
-            var post = postDetail
+            var post = {...postDetail}
             post.parents = postDetail.relationship.parents
             post.couple = postDetail.relationship.couple
             post.children = postDetail.relationship.children
