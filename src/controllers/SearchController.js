@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
-import $ from 'jquery'
+import Avatar from '../assets/images/avatar.svg'
 import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI'
 import Utils from '../utils/index'
@@ -98,7 +98,7 @@ class SearchController extends Component {
 
     renderAddress(address) {
         var pro5 = address.profile || {};
-        var ava = pro5.avatar50 || pro5.avatar || "/img/avt.png"
+        var ava = pro5.avatar50 || pro5.avatar || Avatar
         return (
             <div id="Characters" className="tabcontent">
                 <div className="middle  box-shadow-1">

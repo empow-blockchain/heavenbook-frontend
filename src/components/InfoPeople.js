@@ -31,14 +31,15 @@ class Navbar extends Component {
             },
             preface: "",
             religion: "",
-            isUploading: false
+            isUploading: false,
+            selectedRelationship: "Parents"
         }
     };
 
     componentDidMount() {
         var { postDetail } = this.props
         if (postDetail) {
-            var post = {...postDetail}
+            var post = { ...postDetail }
             post.parents = postDetail.relationship.parents
             post.couple = postDetail.relationship.couple
             post.children = postDetail.relationship.children
@@ -133,6 +134,12 @@ class Navbar extends Component {
         evt.currentTarget.className += " active";
     }
 
+    onSelectRelationship = (selectedRelationship) => {
+        this.setState({
+            selectedRelationship
+        })
+    }
+
     onToggleOptionChild = (option) => {
         if (option === this.state.activeOptionChild) {
             this.setState({
@@ -183,18 +190,76 @@ class Navbar extends Component {
         })
     }
 
+    onDeleteOption = (key, index) => {
+        var { post } = this.state
+        post[key].splice(index, 1)
+        this.setState({
+            post
+        })
+    }
+
+    onValdiatePost = () => {
+        var { post, preface, religion, fileUrl } = this.state
+        if (!post.name.name) {
+            Alert.error('Please type name')
+            return false
+        }
+
+
+        if (!post.name.sex) {
+            Alert.error('Please select sex')
+            return false
+        }
+
+
+        if (!post.age.birth) {
+            Alert.error('Please select birth date')
+            return false
+        }
+
+        if (!post.age.loss) {
+            Alert.error('Please select loss date')
+            return false
+        }
+
+        if (!post.age.hometown) {
+            Alert.error('Please type hometown')
+            return false
+        }
+
+        if (!preface) {
+            Alert.error('Please type preface')
+            return false
+        }
+
+        if (!religion) {
+            Alert.error('Please type religion')
+            return false
+        }
+
+        if (!post.reason.reason) {
+            Alert.error('Please type death reason')
+            return false
+        }
+
+        if (!post.reason.place) {
+            Alert.error('Please type death place')
+            return false
+        }
+
+        if (!fileUrl || fileUrl.length === 0) {
+            Alert.error('Please upload a picture')
+            return false
+        }
+
+        return true
+    }
+
     onUpdate = () => {
         var { post, preface, religion, fileUrl } = this.state
         var { postDetail } = this.props
 
-        if (!post.name.name || !post.name.sex
-            || !post.age.birth || !post.age.loss || !post.age.hometown
-            || !preface
-            || !religion
-            || !post.reason.reason || !post.reason.place
-            || fileUrl.length === 0) {
-            console.log('Please_enter_full_information')
-            Alert.error(LanguageService.changeLanguage('Please_enter_full_information'))
+        if (!this.onValdiatePost()) {
             return
         }
 
@@ -238,17 +303,9 @@ class Navbar extends Component {
     onPost = () => {
         var { post, preface, religion, fileUrl } = this.state
 
-        if (!post.name.name || !post.name.sex
-            || !post.age.birth || !post.age.loss|| !post.age.hometown
-            || !preface
-            || !religion
-            || !post.reason.reason || !post.reason.place
-            || fileUrl.length === 0) {
-            console.log('Please_enter_full_information')
-            Alert.error(LanguageService.changeLanguage('Please_enter_full_information'))
+        if (!this.onValdiatePost()) {
             return
         }
-
         post.preface = preface
         post.religion = religion
         post.relationship = {
@@ -326,7 +383,7 @@ class Navbar extends Component {
     }
 
     render() {
-        var { filePhoto, activeOptionChild, post, preface, religion, isUploading, fileUrl } = this.state
+        var { filePhoto, activeOptionChild, post, preface, religion, isUploading, fileUrl, selectedRelationship } = this.state
         var { postDetail } = this.props
         return (
             <LoadingOverlay active={isUploading} spinner={true}>
@@ -382,7 +439,7 @@ class Navbar extends Component {
                                             selected={post.age.loss}
                                             onChange={(e) => this.onChangeInput(new Date(e).getTime(), "age", "loss")}
                                         />
-                                         <input value={post.age.hometown} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_home_town')} onChange={(e) => this.onChangeInput(e.target.value, "age", "hometown")} />
+                                        <input value={post.age.hometown} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_home_town')} onChange={(e) => this.onChangeInput(e.target.value, "age", "hometown")} />
                                     </div>}
                                 </div>
                                 <div className="form-group box-shadow-3 active">
@@ -404,7 +461,10 @@ class Navbar extends Component {
                                     {activeOptionChild === 'study' && <div className="option-child">
                                         {post.education.map((value, index) => {
                                             return (
-                                                <div>
+                                                <div style={{ position: 'relative' }}>
+                                                    {index > 0 && <div style={{ position: 'absolute', right: 10, top: -25 }} onClick={() => this.onDeleteOption("education", index)}>
+                                                        <img src="/img/Group 8177.png" alt="" style={{ width: 25, height: 25 }} />
+                                                    </div>}
                                                     <input value={value.name} onChange={(e) => this.onChangeInputArr(e.target.value, "education", index, "name")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_school_name')} />
                                                     <input value={value.degree} onChange={(e) => this.onChangeInputArr(e.target.value, "education", index, "degree")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Degree')} />
                                                     <DatePicker className="form-control"
@@ -443,7 +503,10 @@ class Navbar extends Component {
                                     {activeOptionChild === 'achievement' && <div className="option-child">
                                         {post.achievements.map((value, index) => {
                                             return (
-                                                <div>
+                                                <div style={{ position: 'relative' }}>
+                                                    {index > 0 && <div style={{ position: 'absolute', right: 10, top: -25 }} onClick={() => this.onDeleteOption("achievements", index)}>
+                                                        <img src="/img/Group 8177.png" alt="" style={{ width: 25, height: 25 }} />
+                                                    </div>}
                                                     <input value={value.field} onChange={(e) => this.onChangeInputArr(e.target.value, "achievements", index, "field")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_field')} />
                                                     <input value={value.achievement} onChange={(e) => this.onChangeInputArr(e.target.value, "achievements", index, "achievement")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_achievement')} />
                                                     <DatePicker className="form-control"
@@ -480,11 +543,11 @@ class Navbar extends Component {
                                     </div>
                                     {activeOptionChild === 'relationship' && <div className="option-child">
                                         <div className="tab">
-                                            <button type="button" className="tablinks" onClick={(event) => this.openCity(event, 'London')}>{LanguageService.changeLanguage('Parents')}</button>
-                                            <button type="button" className="tablinks" onClick={(event) => this.openCity(event, 'Paris')}>{LanguageService.changeLanguage('Couple')}</button>
-                                            <button type="button" className="tablinks" onClick={(event) => this.openCity(event, 'Tokyo')}>{LanguageService.changeLanguage('Children')}</button>
+                                            <button type="button" className={`tablinks ${selectedRelationship === "Parents" ? "active" : ""}`} onClick={() => this.onSelectRelationship('Parents')}>{LanguageService.changeLanguage('Parents')}</button>
+                                            <button type="button" className={`tablinks ${selectedRelationship === "Couple" ? "active" : ""}`} onClick={() => this.onSelectRelationship('Couple')}>{LanguageService.changeLanguage('Couple')}</button>
+                                            <button type="button" className={`tablinks ${selectedRelationship === "Children" ? "active" : ""}`} onClick={() => this.onSelectRelationship('Children')}>{LanguageService.changeLanguage('Children')}</button>
                                         </div>
-                                        <div id="London" className="tabcontent">
+                                        {selectedRelationship === "Parents" && <div id="London" className="tabcontent">
                                             <div className="option-child">
                                                 <input value={post.parents.fatherName} onChange={(e) => this.onChangeInput(e.target.value, "parents", "fatherName")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_father_name')} />
                                                 <DatePicker className="form-control"
@@ -517,12 +580,15 @@ class Navbar extends Component {
                                                     onChange={(e) => this.onChangeInput(new Date(e).getTime(), "parents", "lossMother")}
                                                 />
                                             </div>
-                                        </div>
-                                        <div id="Paris" className="tabcontent">
+                                        </div>}
+                                        {selectedRelationship === "Couple" && <div id="Paris" className="tabcontent">
                                             <div className="option-child">
                                                 {post.couple.map((value, index) => {
                                                     return (
-                                                        <div>
+                                                        <div style={{ position: 'relative' }}>
+                                                            {index > 0 && <div style={{ position: 'absolute', right: 10, top: -25 }} onClick={() => this.onDeleteOption("couple", index)}>
+                                                                <img src="/img/Group 8177.png" alt="" style={{ width: 25, height: 25 }} />
+                                                            </div>}
                                                             <input value={value.name} onChange={(e) => this.onChangeInputArr(e.target.value, "couple", index, "name")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_couple_name')} />
 
                                                             <DatePicker className="form-control"
@@ -539,12 +605,15 @@ class Navbar extends Component {
                                                     <img src="/img/plus-l.png" alt="" />
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div id="Tokyo" className="tabcontent">
+                                        </div>}
+                                        {selectedRelationship === "Children" && <div id="Tokyo" className="tabcontent">
                                             <div className="option-child">
                                                 {post.children.map((value, index) => {
                                                     return (
-                                                        <div>
+                                                        <div style={{ position: 'relative' }}>
+                                                            {index > 0 && <div style={{ position: 'absolute', right: 10, top: -25 }} onClick={() => this.onDeleteOption("children", index)}>
+                                                                <img src="/img/Group 8177.png" alt="" style={{ width: 25, height: 25 }} />
+                                                            </div>}
                                                             <div className="group-name-sex">
                                                                 <input value={value.name} onChange={(e) => this.onChangeInputArr(e.target.value, "children", index, "name")} type="text" className="form-control" placeholder={LanguageService.changeLanguage('Enter_the_child_name')} />
                                                                 <div className="group-radio">
@@ -577,7 +646,7 @@ class Navbar extends Component {
                                                     <img src="/img/plus-l.png" alt="" />
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div>}
                                     </div>}
                                 </div>
                             </div>

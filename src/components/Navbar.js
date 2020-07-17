@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import $ from 'jquery'
 import LanguageService from '../services/LanguageService'
 import Link from 'next/link'
+import { EMPOW } from '../constants/index'
 
 class Navbar extends Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class Navbar extends Component {
                             </Link>
                         </ul>
                     </li>
-                    <li className="nav-item"><a href="#"><img src="/img/list.png" />{LanguageService.changeLanguage('About_us')}</a></li>
+                    <li className="nav-item"><a href="https://about.empow.io" target="_blank" rel="noopener noreferrer"><img src="/img/list.png" />{LanguageService.changeLanguage('About_us')}</a></li>
                 </ul>
 
                 <div className="social">
@@ -75,20 +76,23 @@ class Navbar extends Component {
         </span>
                     <span>
                         <img src="/img/appstore.png" alt="" />
-          Google Play
+          App Store
         </span>
                     <span>
-                        <img src="/img/telegram.png" alt="" />
-          Google Play
-        </span>
+                        <a href="https://t.me/empowofficial" target="_blank" rel="noopener noreferrer">
+                            <img src="/img/telegram.png" alt="" />Telegram
+                        </a>
+                    </span>
                     <span>
-                        <img src="/img/fb.png" alt="" />
-          Google Play
-        </span>
+                        <a href="https://www.facebook.com/Empowofficial" target="_blank" rel="noopener noreferrer">
+                            <img src="/img/fb.png" alt="" />Facebook
+                        </a>
+                    </span>
                     <span>
-                        <img src="/img/twitter.png" alt="" />
-          Google Play
-        </span>
+                        <a href="https://twitter.com/EmpowNetwork" target="_blank" rel="noopener noreferrer">
+                            <img src="/img/twitter.png" alt="" />Twitter
+                        </a>
+                    </span>
                 </div>
             </div>
         );

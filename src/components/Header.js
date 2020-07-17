@@ -16,6 +16,8 @@ import Alert from 'react-s-alert';
 import ReCAPTCHA from "react-google-recaptcha";
 import Link from 'next/link'
 import Socket from '../Socket'
+import LoadMoreLoading from '../assets/images/load-more-loading.svg'
+import IconPack from 'feather-icons'
 
 class Header extends Component {
 
@@ -25,12 +27,16 @@ class Header extends Component {
         this.state = {
             searchText: '',
             myAddress: false,
-            myAccountInfo: false,
             isAddressActived: true,
-
             captchaCode: false,
             typeUsername: "",
             isLoadingActiveWallet: false,
+            listNoti: [],
+            isLoadMore: true,
+            page: 1,
+            pageSize: 20,
+            myAccountInfo: {},
+            count_notification: 0
         }
     };
 
@@ -75,6 +81,16 @@ class Header extends Component {
             this.props.setReportTagArray(reportTagArray)
         })
 
+        ServerAPI.getCountNotification(myAddress).then(count_notification => {
+            console.log(count_notification)
+            this.setState({
+                count_notification: parseInt(count_notification) 
+            })
+        }).catch(err => {
+
+        })
+
+
         var socket = await Socket.getSocket()
 
         socket.emit("get_new_like", myAddress)
@@ -107,6 +123,65 @@ class Header extends Component {
         });
     }
 
+    onShowNoti = async () => {
+        if (!this.state.showNoti) {
+            ServerAPI.updateCountNoti(this.state.myAddress)
+            this.setState({
+                count_notification: 0
+            })
+            await this.getNoti(this.state.page, this.state.pageSize);
+        }
+
+        this.setState({
+            showNoti: !this.state.showNoti
+        })
+    }
+
+    isBottom(el) {
+        return Math.round(el.getBoundingClientRect().bottom) === 550
+    }
+
+    trackScrolling = () => {
+        if (!this.state.isLoadMore) {
+            return;
+        }
+        const wrappedElement = document.getElementById('vanvan');
+        if (this.isBottom(wrappedElement)) {
+            console.log('header bottom reached');
+            this.onLoadMore()
+        }
+    };
+
+    onLoadMore = async () => {
+        await this.getNoti(this.state.page + 1, this.state.pageSize)
+
+        this.setState({
+            page: this.state.page + 1
+        })
+    }
+
+    getNoti = async (page, pageSize) => {
+        var { myAddress } = this.state
+        var newData = await ServerAPI.getNotification(myAddress, page, pageSize);
+        if (newData.length === 0 || newData.length < pageSize) {
+            this.setState({
+                isLoadMore: false
+            })
+        } else {
+            this.setState({
+                isLoadMore: true
+            })
+        }
+
+        var listNoti = [...this.state.listNoti, ...newData]
+        if (page === 1) {
+            listNoti = newData
+        }
+        this.setState({
+            listNoti
+        })
+    }
+
     convertNoti = (data) => {
         var msg = ''
         if (data.action === 'like') {
@@ -133,17 +208,9 @@ class Header extends Component {
     }
 
     plusOneNoti = () => {
-        let myAccountInfo = this.state.myAccountInfo
-        if (myAccountInfo) {
-            if (myAccountInfo.count_notification) {
-                myAccountInfo.count_notification++
-            } else {
-                myAccountInfo.count_notification = 1
-            }
-            this.setState({
-                myAccountInfo
-            })
-        }
+        this.setState({
+            count_notification : this.state.count_notification + 1
+        })
     }
 
     convertNotiFollow = (data) => {
@@ -242,8 +309,62 @@ class Header extends Component {
         )
     }
 
+    renderNoti() {
+        var { listNoti, isLoadMore } = this.state
+
+        if (listNoti.length === 0) {
+            return (
+                <ul className="waper-noti scroll">
+                    <p>No notification</p>
+                </ul>
+            )
+        }
+        return (
+            <ul id="vanvan" className="waper-noti scroll" onScroll={() => this.trackScrolling()}>
+                {listNoti.map((value, index) => {
+                    var name = `${value.username_last_action ? value.username_last_action : value.last_action.substr(0, 20) + '...'}`
+                    var count = `${value.count_action > 1 ? ` and ${value.count_action - 1} others ` : ''}`
+                    var msg = ''
+
+                    if (value.action === 'like') {
+                        msg = `${name}${count} liked your post: "${value.name}"`
+                    }
+
+                    if (value.action === 'comment') {
+                        msg = `${name}${count} commented your post: "${value.name}"`
+                    }
+
+                    if (value.action === 'reply') {
+                        msg = `${name}${count} replied your comment: "${value.name}"`
+                    }
+
+                    if (value.action === 'likeComment') {
+                        msg = `${name}${count} liked your comment: "${value.name}"`
+                    }
+
+                    var avatar = value.address.profile ? (value.address.profile.avatar50 ? value.address.profile.avatar50 : (value.address.profile.avatar ? value.address.profile.avatar : Avatar)) : Avatar
+                    return (
+                        <Link href="/post/[postId]" as={`/post/${value.postId}`} key={index}>
+                            <a href={`/post/${value.postId}`} className="noti">
+                                <div className="child-noti">
+                                    <img className="waper-ava" src={avatar} alt="photos"></img>
+                                    <p style={{ lineHeight: '25px' }}>{msg}</p>
+                                </div>
+                                <p className="time">{Utils.convertDateTime(value.time)}</p>
+                            </a>
+
+                        </Link>
+                    )
+                })}
+                {isLoadMore && <div className="load-more-post">
+                    <img src={LoadMoreLoading} alt="photos"></img>
+                </div>}
+            </ul>
+        )
+    }
+
     render() {
-        var { myAddress, myAccountInfo, isAddressActived } = this.state
+        var { myAddress, myAccountInfo, isAddressActived, count_notification } = this.state
         var profile = myAccountInfo.profile || {}
         var avatar = profile.avatar50 ? profile.avatar50 : (profile.avatar ? profile.avatar : Avatar)
         return (
@@ -268,21 +389,25 @@ class Header extends Component {
                         </div>}
 
                         {myAddress && <div className="account-info">
-                            <div className="left">
-                                <img src={"/img/Group 8533.png"} style={{ width: 35 }} alt="" />
+                            <div className="left waper-icon">
+                                {count_notification === 0 && <span onClick={() => this.onShowNoti()} dangerouslySetInnerHTML={{ __html: IconPack.icons.bell.toSvg({ stroke: "white", width: 32, height: 32, 'stroke-width': 1 }) }}></span>}
+                                {count_notification > 0 && <span className="notification-icon"
+                                    onClick={() => this.onShowNoti()}
+                                    dangerouslySetInnerHTML={{ __html: `<p class="number">${count_notification > 99 ? '99+' : count_notification}</p>` + IconPack.icons.bell.toSvg({ stroke: "white", fill: "white", width: 32, height: 32, 'stroke-width': 1 }) }}></span>}
                             </div>
-                            <div className="right">
 
+                            <div className="right">
                                 <Link href="/[account]" as={`/${myAccountInfo.selected_username ? myAccountInfo.selected_username : myAccountInfo.address}`}>
                                     <a href={`/${myAccountInfo.selected_username ? myAccountInfo.selected_username : myAccountInfo.address}`}>
-                                    <img src={avatar} style={{ width: 50, borderRadius: 50 }} alt="" /></a>
+                                        <img src={avatar} style={{ width: 50, borderRadius: 50 }} alt="" /></a>
                                 </Link>
 
 
-                                <a href='https://empow.io'><img src="/img/Group 8341.png" style={{ width: 30 }} alt="" /></a>
+                                <a href='https://empow.io' target="_blank" rel="noopener noreferrer"><img src="/img/Group 8341.png" style={{ width: 30 }} alt="" /></a>
                             </div>
 
                         </div>}
+                        {this.state.showNoti && this.renderNoti()}
                     </div>
                 </div>
 

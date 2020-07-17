@@ -10,6 +10,14 @@ const ServerAPI = {
         })
     },
 
+    getCountNotification(address) {
+        return new Promise((resolve, reject) => {
+            Axios.get(`${API_ENDPOINT}/getCountNotification/${address}`)
+                .then(res => (resolve(res.data)))
+                .catch(error => (reject(error.response.data)))
+        })
+    },
+
     getNewFeed(myAddress, typeNewFeed = 'trending', pageSize = 10, page = 1) {
         return new Promise((resolve, reject) => {
             Axios.get(`${API_ENDPOINT}/getNewFeed?page=${page}&pageSize=${pageSize}&address=${myAddress}&type=${typeNewFeed}`)

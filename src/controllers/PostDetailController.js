@@ -5,12 +5,14 @@ import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI'
 import Utils from '../utils/index'
 import InfoPeople from '../components/InfoPeople'
+import Router from 'next/router'
 
 class PostDetailController extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            showUpdate: false
         };
     };
 
@@ -19,14 +21,20 @@ class PostDetailController extends Component {
             query: props.query
         }
 
-        const postDetail = await ServerAPI.getPostDetailByPostId(props.query.postId, props.myAddress)
-        result.postDetail = postDetail
+        try {
+            const postDetail = await ServerAPI.getPostDetailByPostId(props.query.postId, props.myAddress)
+            result.postDetail = postDetail
+            return result
+        } catch (err) {
+            result.postDetail = false
+            return result
+        }
 
-        return result
     }
 
     componentDidMount() {
         var { postDetail } = this.props
+        console.log(postDetail)
         if (postDetail) {
             var obj = {
                 achievements: postDetail.achievements,
@@ -44,9 +52,10 @@ class PostDetailController extends Component {
             this.setState({
                 postDetail: obj
             })
+        } else {
+            Router.push("/")
         }
     }
-
     renderInfoClient() {
         var { postDetail } = this.props
         return (
@@ -83,10 +92,10 @@ class PostDetailController extends Component {
                         </span>}
                     </div>
                     <ul>
-                        {/* <li>
+                        <li>
                             {LanguageService.changeLanguage('Home_town')}
-                            <span>Từ sơn bắc ninh</span>
-                        </li> */}
+                            <span>{postDetail.age.hometown}</span>
+                        </li>
                         <li>
                             {LanguageService.changeLanguage('Burial_place')}
                             <span>{postDetail.reason.place}</span>
@@ -96,47 +105,26 @@ class PostDetailController extends Component {
                             <span>{Utils.convertDate(postDetail.age.loss)}</span>
                         </li>
                     </ul>
-                    <div className="button-update">
+                    <div className="button-update" onClick={() => this.setState({ showUpdate: !this.state.showUpdate })}>
                         <a href="#" className="btn btn-update">
                             <img src="/img/btnupdate.png" alt="" />
                             {LanguageService.changeLanguage('Update')}
                         </a>
                     </div>
                 </div>
-                <div className="social">
-                    <span>
-                        <img src="/img/ggplay.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/appstore.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/telegram.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/fb.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/twitter.png" alt="" />
-                Google Play
-              </span>
-                </div>
             </div>
         )
     }
 
     render() {
-        var { postDetail } = this.state
+        var { postDetail } = this.props
+        var { showUpdate } = this.state
         return (
             <div className="container">
                 <div className="row">
-                    {this.renderInfoClient()}
+                    {postDetail && this.renderInfoClient()}
                     <div class="col-9">
-                        {postDetail && <InfoPeople postDetail={postDetail}></InfoPeople>}
+                        {(showUpdate && postDetail) && <InfoPeople postDetail={postDetail}></InfoPeople>}
                     </div>
                 </div>
             </div>

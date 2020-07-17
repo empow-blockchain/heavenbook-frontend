@@ -7,6 +7,7 @@ import ServerAPI from '../ServerAPI';
 import Utils from '../utils/index'
 import { EMSCAN, EMPOW } from '../constants/index'
 import Avatar from '../assets/images/avatar.svg'
+import Router from 'next/router'
 class AccountController extends Component {
 
     constructor(props) {
@@ -16,6 +17,8 @@ class AccountController extends Component {
             pageSize: 5,
             page: 1,
             isLoadMore: true,
+            isMyAccount: false,
+            accountInfo: {},
         };
     };
 
@@ -25,6 +28,7 @@ class AccountController extends Component {
 
     async componentDidMount() {
         this.getData();
+        this.checkIsMyAccount()
     }
 
     async componentDidUpdate(pre) {
@@ -32,12 +36,43 @@ class AccountController extends Component {
             return;
         }
         this.getData()
+        this.checkIsMyAccount()
+    }
+
+    checkIsMyAccount = () => {
+        if (!this.props.myAccountInfo) return;
+
+        var addressAccount = this.props.query.account
+        if (addressAccount === this.props.myAddress || addressAccount === this.props.myAccountInfo.selected_username) {
+            this.setState({
+                isMyAccount: true
+            })
+        }
     }
 
     getData = () => {
-        var { myAddress } = this.props
-        this.getPost(myAddress, this.state.pageSize, this.state.page)
+        var addressAccount = this.props.query.account
+        ServerAPI.getAddress(addressAccount).then(accountInfo => {
+            this.setState({
+                addressAccount,
+                accountInfo
+            })
+
+            this.getPost(accountInfo.address, this.state.pageSize, this.state.page)
+        }).catch(err => {
+            ServerAPI.getAddressByUsername(addressAccount).then(accountInfo => {
+                this.setState({
+                    addressAccount,
+                    accountInfo
+                })
+
+                this.getPost(accountInfo.address, this.state.pageSize, this.state.page)
+            }).catch(err => {
+                Router.push("/")
+            })
+        })
     }
+
 
     getPost(address, pageSize, page) {
         ServerAPI.getMyPost(address, this.props.myAddress, pageSize, page).then(newData => {
@@ -63,8 +98,8 @@ class AccountController extends Component {
     }
 
     renderInfo() {
-        var { myAccountInfo, myAddress } = this.props
-        var profile = myAccountInfo.profile || {}
+        var { addressAccount, accountInfo, isMyAccount } = this.state
+        var profile = accountInfo.profile || {}
         var avatar = profile.avatar120 ? profile.avatar120 : (profile.avatar ? profile.avatar : Avatar)
         return (
             <div className="col-12 col-lg-3 col-xl-3">
@@ -75,12 +110,12 @@ class AccountController extends Component {
                         </figure>
                         <div className="info-post">
                             <span className="name-user">
-                                {myAccountInfo.selected_username ? myAccountInfo.selected_username : (myAddress ? myAddress.substring(0,10) + '...' : '...' )}
+                                {accountInfo.selected_username ? accountInfo.selected_username : (addressAccount ? addressAccount.substring(0, 10) + '...' : '...')}
                             </span>
-                            <span className="date">{Utils.formatCurrency(myAccountInfo.total_post_reward)} EM</span>
+                            <span className="date">{Utils.formatCurrency(accountInfo.total_post_reward)} EM</span>
                         </div>
                     </div>
-                    <div className="group-em">
+                    {isMyAccount && <div className="group-em">
                         <button className="rename">
                             <a href={`${EMPOW}/setting`} target="_blank" style={{ color: 'white' }}>
                                 <span>{LanguageService.changeLanguage('Rename')}</span>
@@ -94,29 +129,7 @@ class AccountController extends Component {
                             </a>
 
                         </button>
-                    </div>
-                </div>
-                <div className="social">
-                    <span>
-                        <img src="/img/ggplay.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/appstore.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/telegram.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/fb.png" alt="" />
-                Google Play
-              </span>
-                    <span>
-                        <img src="/img/twitter.png" alt="" />
-                Google Play
-              </span>
+                    </div>}
                 </div>
             </div>
         )
