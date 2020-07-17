@@ -7,6 +7,7 @@ import InfoPeople from '../components/InfoPeople';
 import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI';
 import Utils from '../utils/index'
+import Alert from 'react-s-alert'
 const KeyCodes = {
     comma: 188,
     enter: 13,

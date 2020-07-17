@@ -10,6 +10,7 @@ import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import Header from '../components/Header'
 import Head from 'next/head'
 import Socket from '../Socket'
+import Alert from 'react-s-alert';
 
 const makeStore = (initialState, options) => {
     return configureStore({
@@ -43,13 +44,13 @@ class MyApp extends App {
 
         return (
             <Provider store={store}>
+                <Alert stack={{ limit: 3 }} timeout={10000} html={true} position="bottom-left"></Alert>
                 <Head>
                     <title>Heavenbook.io</title>
                     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
                 </Head>
                 <Header>
-
                 </Header>
                 <Component {...pageProps} />
             </Provider>
