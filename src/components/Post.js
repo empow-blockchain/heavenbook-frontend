@@ -65,7 +65,7 @@ class Post extends Component {
             return;
         }
 
-       
+
         this.setState({
             post: this.props.post,
             totalLike: this.props.post.totalLike,
@@ -661,13 +661,13 @@ class Post extends Component {
                     <div className="box">
                         <div className="box badges">
                             <span className="badges-grey">
+                                {post.preface}
+                            </span>
+                            <span className="badges-grey">
                                 {post.religion}
                             </span>
                             {post.education[0].name && <span className="badges-grey">
                                 {post.education[0].name}
-                            </span>}
-                            {post.achievements[0].achievement && <span className="badges-grey">
-                                {post.achievements[0].achievement}
                             </span>}
                             {post.relationship.couple && <span className="badges-grey">
                                 {LanguageService.changeLanguage('Married')}
@@ -677,36 +677,29 @@ class Post extends Component {
                             </span>}
                         </div>
                         <div className="content">
-                            <div className="row">
-                                <div className="col-6">
-                                    <ul>
-                                        <li>
-                                            {LanguageService.changeLanguage('Home_town')}
-                                            <span>{post.age.hometown}</span>
-                                        </li>
-                                        <li>
-                                            {LanguageService.changeLanguage('Burial_place')}
-                                            <span>{post.reason.place}</span>
-                                        </li>
-                                        <li>
-                                            {LanguageService.changeLanguage('Downtime')}
-                                            <span>{Utils.convertDate(post.age.loss)}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="col-6">
-                                    <ul>
-                                        <li>
-                                            {LanguageService.changeLanguage('Achievement')}
-                                            {post.achievements.map((value, index) => {
-                                                if (value.field && value.achievement) {
-                                                    return <span>{value.field}: {value.achievement}</span>
-                                                }
-                                            })}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <ul>
+                                <li>
+                                    {LanguageService.changeLanguage('Home_town')}
+                                    <span>{post.age.hometown}</span>
+                                </li>
+                                <li>
+                                    {LanguageService.changeLanguage('Burial_place')}
+                                    <span>{post.reason.place}</span>
+                                </li>
+                                <li>
+                                    {LanguageService.changeLanguage('Downtime')}
+                                    <span>{Utils.convertDate(post.age.loss)}</span>
+                                </li>
+
+                                <li>
+                                    {LanguageService.changeLanguage('Achievement')}
+                                    {post.achievements.map((value, index) => {
+                                        if (value.field && value.achievement) {
+                                            return <span>{value.field}: {value.achievement}</span>
+                                        }
+                                    })}
+                                </li>
+                            </ul>
                         </div>
                         {route !== "Validator" && <div className="box-like">
                             <div className="count-like">
