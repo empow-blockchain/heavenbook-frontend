@@ -33,7 +33,7 @@ class HomeController extends Component {
     async componentDidMount() {
         document.addEventListener('scroll', this.trackScrolling);
         const data = await this.getNewFeed(this.state.page, this.state.pageSize)
-        this.setState({data})
+        this.setState({ data })
     }
 
     componentWillUnmount() {
@@ -45,7 +45,7 @@ class HomeController extends Component {
             return;
         }
         const data = await this.getNewFeed(this.state.page, this.state.pageSize)
-        this.setState({data})
+        this.setState({ data })
     }
 
     isBottom(el) {
@@ -66,7 +66,7 @@ class HomeController extends Component {
 
     onLoadMore = async () => {
         var newData = await this.getNewFeed(this.state.page + 1, this.state.pageSize)
-        newData = [...newData, ...this.state.data]
+        newData = [...this.state.data, ...newData]
 
         this.setState({
             page: this.state.page + 1,

@@ -106,6 +106,14 @@ const ServerAPI = {
         })
     },
 
+    getPostVerifierDetailByPostId(postId, myAddress) {
+        return new Promise((resolve, reject) => {
+            Axios.get(`${API_ENDPOINT}/getPostVerifierDetailByPostId/${postId}`)
+                .then(res => (resolve(res.data)))
+                .catch(error => (reject(error.response.data)))
+        })
+    },
+
     getPostRightNavbar(myAddress) {
         return new Promise((resolve, reject) => {
             Axios.get(`${API_ENDPOINT}/getPostRightNavbar?address=${myAddress}`)

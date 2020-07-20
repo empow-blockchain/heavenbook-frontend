@@ -22,8 +22,8 @@ class ValidatorController extends Component {
     }
 
     async componentDidMount() {
-        var newPost = await ServerAPI.getPostDetailByPostId(this.props.query.postId)
-        var oldPost = await ServerAPI.getPostDetailByPostId(newPost.updateId)
+        var newPost = await ServerAPI.getPostVerifierDetailByPostId(this.props.query.postId)
+        var oldPost = await ServerAPI.getPostVerifierDetailByPostId(newPost.updateId)
         this.setState({
             newPost,
             oldPost
