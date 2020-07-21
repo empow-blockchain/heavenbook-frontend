@@ -622,9 +622,10 @@ class Post extends Component {
                             :
                             <Fragment>
                                 <p className="report-title">Report this post</p>
-                                {reportTagArray.map((value, index) => {
+                                <div onClick={() => this.onReportPost("Smear")} className="one-report-tag">Smear</div>
+                                {/* {reportTagArray.map((value, index) => {
                                     return <div key={index} onClick={() => this.onReportPost(value)} className="one-report-tag">{Utils.properCase(value)}</div>
-                                })}
+                                })} */}
                             </Fragment>
                         }
                     </div>
