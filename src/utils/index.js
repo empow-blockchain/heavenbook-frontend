@@ -25,8 +25,14 @@ const Utils = {
     convertDate(timestamp) {
         var a = new Date(timestamp);
         var year = a.getFullYear();
-        var month = a.getMonth();
+        var month = a.getMonth() + 1;
+        if (month < 10) {
+            month = '0' + month.toString()
+        }
         var date = a.getDate();
+        if (date < 10) {
+            date = '0' + date.toString()
+        }
         var time = date + '/' + month + '/' + year;
         return time;
     },
