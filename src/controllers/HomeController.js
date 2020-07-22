@@ -108,12 +108,12 @@ class HomeController extends Component {
                 <div className="row">
                     <Navbar></Navbar>
                     <div id="home" className="col-10">
-                        <div className="row">
+                        {showAdd && <div className="row">
                             <div className="col-12">
-                                {showAdd && <InfoPeople onPostSuccess={this.onPostSuccess}></InfoPeople>}
+                                <InfoPeople onPostSuccess={this.onPostSuccess}></InfoPeople>
                             </div>
-                        </div>
-                        <div className="row">
+                        </div>}
+                        <div className="row orion">
                             <div className="col-9">
                                 {!showAdd && <div className="add-status" onClick={() => { this.setState({ showAdd: !showAdd }) }}>
                                     <p>{LanguageService.changeLanguage('Honor_those_who_have_lost_here')}...</p>

@@ -108,7 +108,7 @@ class SearchController extends Component {
                         </figure>
                         <div className="info-post">
                             <span className="name-user">
-                                {address.selected_username ? address.selected_username : address.address}
+                                {address.selected_username ? address.selected_username : address.address.substring(0,15) + '...'}
                             </span>
                         </div>
                     </div>

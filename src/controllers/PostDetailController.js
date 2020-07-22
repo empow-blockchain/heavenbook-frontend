@@ -120,12 +120,12 @@ class PostDetailController extends Component {
         var { postDetail } = this.props
         var { showUpdate } = this.state
         return (
-            <div className="container">
+            <div id="post-detail" className="container">
                 <div className="row">
                     {postDetail && this.renderInfoClient()}
-                    <div class="col-9">
-                        {(showUpdate && postDetail) && <InfoPeople postDetail={postDetail}></InfoPeople>}
-                    </div>
+                    {(showUpdate && postDetail) && <div class="col-9">
+                        <InfoPeople postDetail={postDetail}></InfoPeople>
+                    </div>}
                 </div>
             </div>
         )

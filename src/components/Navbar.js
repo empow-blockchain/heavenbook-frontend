@@ -22,7 +22,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div className="col-2">
+            <div id="navbar" className="col-2">
                 <ul className="parent">
                     <li className="nav-item"><a href="/"><img src="/img/Group 8343.png" />{LanguageService.changeLanguage('Home')}</a></li>
                     <li className="nav-item"><a href="#"><img src="/img/Group 8344.png" />{LanguageService.changeLanguage('Trending')}</a></li>

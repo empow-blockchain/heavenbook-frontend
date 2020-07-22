@@ -11,6 +11,8 @@ import {
 } from '../reducers/appReducer'
 import Link from 'next/link'
 import moment from 'moment'
+import Avatar from '../assets/images/avatar.svg'
+
 const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -119,7 +121,7 @@ class RewardController extends Component {
 
         const tx = window.empow.callABI(CONTRACT, "likeWithdraw", [item.postId])
         Utils.sendAction(tx, 200000).then(res => {
-          //  this.updateMyAccountInfo()
+            //  this.updateMyAccountInfo()
         }).catch(err => {
         })
     }
@@ -135,7 +137,7 @@ class RewardController extends Component {
 
         const tx = window.empow.callABI(CONTRACT, "likeCommentWithdraw", [item.postId, item.commentId.toString()])
         Utils.sendAction(tx, 200000).then(res => {
-           // this.updateMyAccountInfo()
+            // this.updateMyAccountInfo()
         }).catch(err => {
 
         })
@@ -143,13 +145,15 @@ class RewardController extends Component {
 
     renderCommentItem(comment) {
         var address = comment.address || {};
+        var profile = address.profile || {}
+        var avatar = profile.avatar120 ? profile.avatar120 : (profile.avatar ? profile.avatar : Avatar)
         return (
             <div className="box-child">
                 <div className="row">
                     <div className="col-12 col-lg-8">
                         <div className="top-user">
                             <figure>
-                                <img src="/img/avt-comment.png" alt="" />
+                                <img src={avatar} style={{ width: 50, height: 50, borderRadius: 30 }} alt="" />
                             </figure>
                             <div className="info-post">
                                 <span className="name-user">
