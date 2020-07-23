@@ -293,6 +293,14 @@ const ServerAPI = {
                 .catch(error => (reject(error.response.data)))
         })
     },
+
+    onFollowPost(myAddress, postId) {
+        return new Promise((resolve, reject) => {
+            Axios.post(`${API_ENDPOINT}/onFollowPost`, { myAddress, postId })
+                .then(res => (resolve(res.data)))
+                .catch(error => (reject(error.response.data)))
+        })
+    },
 }
 
 export default ServerAPI;

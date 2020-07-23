@@ -6,6 +6,8 @@ import Avatar from '../assets/images/avatar.svg'
 import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI'
 import Utils from '../utils/index'
+import Alert from 'react-s-alert';
+
 class SearchController extends Component {
 
     constructor(props) {
@@ -75,6 +77,17 @@ class SearchController extends Component {
         })
     }
 
+    
+    onFollowPost = async () => {
+        var { myAddress, postDetail } = this.props
+        var result = await ServerAPI.onFollowPost(myAddress, postDetail.postId)
+        if (result.success) {
+            Alert.info(`Follow succes`);
+        } else {
+            Alert.error('Follow error')
+        }
+    }
+
     renderPost(post) {
         return (
             <div id="Characters" className="tabcontent">
@@ -90,7 +103,7 @@ class SearchController extends Component {
                             <span className="date">{Utils.convertDate(post.age.birth)} - {Utils.convertDate(post.age.loss)}</span>
                         </div>
                     </div>
-                    <button className="btn btn-save">{LanguageService.changeLanguage('Follow')}</button>
+                    <button className="btn btn-save" onClick={() => this.onFollowPost()}>{LanguageService.changeLanguage('Follow')}</button>
                 </div>
             </div>
         )
@@ -108,7 +121,7 @@ class SearchController extends Component {
                         </figure>
                         <div className="info-post">
                             <span className="name-user">
-                                {address.selected_username ? address.selected_username : address.address.substring(0,15) + '...'}
+                                {address.selected_username ? address.selected_username : address.address.substring(0, 15) + '...'}
                             </span>
                         </div>
                     </div>

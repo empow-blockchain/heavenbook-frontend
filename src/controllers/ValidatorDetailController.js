@@ -42,7 +42,7 @@ class ValidatorController extends Component {
     renderConfirm() {
         return (
             <div className="notice">
-                <p>Bạn có đồng ý với chỉnh sửa của bài viết này hay không ?</p>
+                <p>Do you agree with the edits of this article?</p>
                 <div className="group-confirm">
                     <button className="btn btn-confirm-person" onClick={() => this.onValidatePost(true)}>Yes</button>
                     <button className="btn btn-confirm-person" onClick={() => this.onValidatePost(false)}>No</button>

@@ -346,6 +346,16 @@ header {
 		}
 	}
 }
+
+.waper-avatar {
+	cursor: pointer;
+	display: block;
+	width: 40px;
+	height: 40px;
+	background-position: center center;
+	background-size: cover;
+	border-radius: 50%;
+}
 .post {
 	position: relative;
 	border-radius: 8px;
@@ -378,16 +388,6 @@ header {
 		justify-content: space-between;
 		border-top: 1px solid #dedede;
 		padding: 10px 20px 10px 20px;
-	}
-
-	.waper-avatar {
-		cursor: pointer;
-		display: block;
-		width: 40px;
-		height: 40px;
-		background-position: center center;
-		background-size: cover;
-		border-radius: 50%;
 	}
 
 	.waper-cmt-avatar {
@@ -1411,6 +1411,7 @@ label.radio {
 		height: unset;
 		font-size: 18px;
 		font-weight: 300;
+		cursor: pointer;
 	}
 	p {
 		width: 90%;

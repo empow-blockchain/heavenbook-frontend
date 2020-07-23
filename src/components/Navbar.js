@@ -79,7 +79,7 @@ class Navbar extends Component {
           App Store
         </span>
                     <span>
-                        <a href="https://t.me/empowofficial" target="_blank" rel="noopener noreferrer">
+                        <a href="https://t.me/heaven_book" target="_blank" rel="noopener noreferrer">
                             <img src="/img/telegram.png" alt="" />Telegram
                         </a>
                     </span>

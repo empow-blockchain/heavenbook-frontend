@@ -6,6 +6,7 @@ import ServerAPI from '../ServerAPI'
 import Utils from '../utils/index'
 import InfoPeople from '../components/InfoPeople'
 import Router from 'next/router'
+import Alert from 'react-s-alert';
 
 class PostDetailController extends Component {
 
@@ -34,7 +35,6 @@ class PostDetailController extends Component {
 
     componentDidMount() {
         var { postDetail } = this.props
-        console.log(postDetail)
         if (postDetail) {
             var obj = {
                 achievements: postDetail.achievements,
@@ -56,6 +56,17 @@ class PostDetailController extends Component {
             Router.push("/")
         }
     }
+
+    onFollowPost = async () => {
+        var { myAddress, postDetail } = this.props
+        var result = await ServerAPI.onFollowPost(myAddress, postDetail.postId)
+        if (result.success) {
+            Alert.info(`Follow succes`);
+        } else {
+            Alert.error('Follow error')
+        }
+    }
+
     renderInfoClient() {
         var { postDetail } = this.props
         return (
@@ -70,7 +81,7 @@ class PostDetailController extends Component {
                             <span className="date">{new Date(postDetail.age.birth).getFullYear()} - {new Date(postDetail.age.loss).getFullYear()}</span>
                         </div>
                     </div>
-                    <div className="btn-save">{LanguageService.changeLanguage('Follow')}</div>
+                    <div className="btn-save" onClick={() => this.onFollowPost()}>{LanguageService.changeLanguage('Follow')}</div>
                     <p className="box-shadow-1">
                         {postDetail.preface}
                     </p>
@@ -117,8 +128,8 @@ class PostDetailController extends Component {
     }
 
     render() {
-        var { postDetail } = this.props
-        var { showUpdate } = this.state
+        // var { postDetail } = this.props
+        var { showUpdate, postDetail } = this.state
         return (
             <div id="post-detail" className="container">
                 <div className="row">

@@ -84,7 +84,7 @@ class Header extends Component {
         ServerAPI.getCountNotification(myAddress).then(count_notification => {
             console.log(count_notification)
             this.setState({
-                count_notification: parseInt(count_notification) 
+                count_notification: parseInt(count_notification)
             })
         }).catch(err => {
 
@@ -209,7 +209,7 @@ class Header extends Component {
 
     plusOneNoti = () => {
         this.setState({
-            count_notification : this.state.count_notification + 1
+            count_notification: this.state.count_notification + 1
         })
     }
 
@@ -322,9 +322,12 @@ class Header extends Component {
         return (
             <ul id="vanvan" className="waper-noti scroll" onScroll={() => this.trackScrolling()}>
                 {listNoti.map((value, index) => {
-                    var name = `${value.username_last_action ? value.username_last_action : value.last_action.substr(0, 20) + '...'}`
-                    var count = `${value.count_action > 1 ? ` and ${value.count_action - 1} others ` : ''}`
                     var msg = ''
+
+                    if (value.action !== 'update') {
+                        var name = `${value.username_last_action ? value.username_last_action : value.last_action.substr(0, 20) + '...'}`
+                        var count = `${value.count_action > 1 ? ` and ${value.count_action - 1} others ` : ''}`
+                    }
 
                     if (value.action === 'like') {
                         msg = `${name}${count} liked your post: "${value.name}"`
@@ -340,6 +343,10 @@ class Header extends Component {
 
                     if (value.action === 'likeComment') {
                         msg = `${name}${count} liked your comment: "${value.name}"`
+                    }
+
+                    if (value.action === 'update') {
+                        msg = `Update post: ${value.name}`
                     }
 
                     var avatar = value.address.profile ? (value.address.profile.avatar50 ? value.address.profile.avatar50 : (value.address.profile.avatar ? value.address.profile.avatar : Avatar)) : Avatar

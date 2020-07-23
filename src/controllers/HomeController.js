@@ -136,9 +136,9 @@ class HomeController extends Component {
                                             if (value.photos && value.photos.length > 0) {
                                                 return (
                                                     <div className="top-user">
-                                                        <figure>
-                                                            <img src={value.photos[0]["670"]} alt="" />
-                                                        </figure>
+                                                        <div className="waper-avatar" style={{ backgroundImage: `url(${value.photos[0]["670"]})`, marginRight: 10 }}>
+
+                                                        </div>
                                                         <div className="info-post">
                                                             <span className="name-user">
                                                                 {value.name.name}
