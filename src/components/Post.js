@@ -58,13 +58,16 @@ class Post extends Component {
 
     componentDidMount() {
         this.callSocket()
+
+        if (this.props.isUpdate) {
+            this.onToggleComment(true)
+        }
     }
 
     async componentDidUpdate(pre) {
         if (_.isEqual(pre.post, this.props.post)) {
             return;
         }
-
 
         this.setState({
             post: this.props.post,
@@ -74,6 +77,10 @@ class Post extends Component {
             realLike: this.props.post.realLike
         })
         this.callSocket()
+
+        if (this.props.isUpdate) {
+            this.onToggleComment(true)
+        }
     }
 
     callSocket = async () => {
@@ -247,11 +254,16 @@ class Post extends Component {
         })
     }
 
-    onToggleComment = async () => {
+    onToggleComment = async (isShow = false) => {
         var { showComment, post } = this.state
         var { myAddress } = this.props
+
+        if (isShow) {
+            showComment = false
+        }
+
         if (!showComment) {
-            var comment = await ServerAPI.getComments(post.postId, myAddress)
+            var comment = await ServerAPI.getComments(this.props.post.postId, myAddress)
             post.comment = comment
         }
         this.setState({
@@ -398,6 +410,7 @@ class Post extends Component {
         var { myAddress, route, blockNumber } = this.props;
         var { post, file } = this.state;
         var comment = post.comment || []
+
         return (
             <Fragment>
                 {myAddress &&

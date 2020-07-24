@@ -15,7 +15,8 @@ class PostDetailController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showUpdate: false
+            showUpdate: false,
+            dataRight: []
         };
     };
 
@@ -62,6 +63,32 @@ class PostDetailController extends Component {
         }
     }
 
+    async componentDidUpdate(pre) {
+        if (_.isEqual(pre, this.props)) {
+            return;
+        }
+
+        const postDetail = await ServerAPI.getPostDetailByPostId(this.props.query.postId, this.props.myAddress)
+
+        var obj = {
+            achievements: postDetail.achievements,
+            age: postDetail.age,
+            education: postDetail.education,
+            name: postDetail.name,
+            photos: postDetail.photos,
+            preface: postDetail.preface,
+            reason: postDetail.reason,
+            relationship: postDetail.relationship,
+            religion: postDetail.religion,
+            postId: postDetail.postId,
+        }
+
+        this.setState({
+            postDetail: obj,
+            showUpdate: false
+        })
+    }
+
     getdataRight = async () => {
         var { myAddress } = this.props
         var data = await ServerAPI.getNewFeed(myAddress, 'all', 10, 1)
@@ -85,7 +112,7 @@ class PostDetailController extends Component {
                         </div>}
                         <div className="row orion">
                             <div className="col-9">
-                                <Post post={postDetail} isUpdate={true} onToggleUpdate={() => this.setState({ showUpdate: !this.state.showUpdate })}></Post>
+                                <Post post={this.props.postDetail} isUpdate={true} onToggleUpdate={() => this.setState({ showUpdate: !this.state.showUpdate })}></Post>
                             </div>
 
                             <div className="col-3 sidebar-right">
@@ -94,7 +121,7 @@ class PostDetailController extends Component {
                                         {LanguageService.changeLanguage('Recent_memorials')}
                                     </h2>
                                     <div className="list-posts-recent">
-                                        {dataRight.map((value, index) => {
+                                        {dataRight.length > 0 && dataRight.map((value, index) => {
                                             if (value.photos && value.photos.length > 0) {
                                                 return (
                                                     <Link href="/post/[postId]" as={`/post/${value.postId}`}>
