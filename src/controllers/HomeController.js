@@ -8,6 +8,8 @@ import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI';
 import Utils from '../utils/index'
 import Alert from 'react-s-alert'
+import Link from 'next/link'
+
 const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -135,17 +137,21 @@ class HomeController extends Component {
                                         {data.map((value, index) => {
                                             if (value.photos && value.photos.length > 0) {
                                                 return (
-                                                    <div className="top-user">
-                                                        <div className="waper-avatar" style={{ backgroundImage: `url(${value.photos[0]["670"]})`, marginRight: 10 }}>
+                                                    <Link href="/post/[postId]" as={`/post/${value.postId}`}>
+                                                        <a href={`/post/${value.postId}`}>
+                                                            <div className="top-user">
+                                                                <div className="waper-avatar" style={{ backgroundImage: `url(${value.photos[0]["670"]})`, marginRight: 10 }}>
 
-                                                        </div>
-                                                        <div className="info-post">
-                                                            <span className="name-user">
-                                                                {value.name.name}
-                                                            </span>
-                                                            <span className="date">{Utils.convertDate(value.age.birth)} - {Utils.convertDate(value.age.loss)}</span>
-                                                        </div>
-                                                    </div>
+                                                                </div>
+                                                                <div className="info-post">
+                                                                    <span className="name-user">
+                                                                        {value.name.name}
+                                                                    </span>
+                                                                    <span className="date">{Utils.convertDate(value.age.birth)} - {Utils.convertDate(value.age.loss)}</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </Link>
                                                 )
                                             }
                                         })}
