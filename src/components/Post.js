@@ -635,13 +635,16 @@ class Post extends Component {
     }
 
     render() {
-        var { post, route } = this.props
+        var { post, route, isUpdate } = this.props
         var { showComment, totalLike, totalCommentAndReply, realLike } = this.state
         return (
             <div>
                 <div className="post">
                     <Link href="/post/[postId]" as={`/post/${post.postId}`}>
                         <a href={`/post/${post.postId}`}>
+                            {isUpdate && <div class="btn btn-update" onClick={() => this.props.onToggleUpdate()}>
+                                <img src="/img/btnupdate.png" alt="" />Update
+                            </div>}
                             <div className="top-user">
                                 <div className="waper-avatar" style={{ backgroundImage: `url(${post.photos[0]["670"]})`, marginRight: 10 }}>
 

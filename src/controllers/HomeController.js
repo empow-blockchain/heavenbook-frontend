@@ -43,11 +43,22 @@ class HomeController extends Component {
     }
 
     async componentDidUpdate(pre) {
-        if (_.isEqual(pre.myAddress, this.props.myAddress)) {
+        if (_.isEqual(pre, this.props)) {
             return;
         }
-        const data = await this.getNewFeed(this.state.page, this.state.pageSize)
-        this.setState({ data })
+
+        if (this.props.typeNewFeed !== pre.typeNewFeed || this.props.myAddress !== pre.myAddress) {
+            if (pre.typeNewFeed !== this.props.typeNewFeed) {
+                this.setState({
+                    page: 1,
+                    isLoadMore: true,
+                    data: []
+                })
+            }
+
+            const data = await this.getNewFeed(this.state.page, this.state.pageSize)
+            this.setState({ data })
+        }
     }
 
     isBottom(el) {
@@ -77,8 +88,8 @@ class HomeController extends Component {
     }
 
     getNewFeed = async (page, pageSize) => {
-        var { myAddress } = this.props
-        var newData = await ServerAPI.getNewFeed(myAddress, 'trending', pageSize, page)
+        var { myAddress, typeNewFeed } = this.props
+        var newData = await ServerAPI.getNewFeed(myAddress, typeNewFeed, pageSize, page)
 
         if (newData.length === 0 || newData.length < pageSize) {
             this.setState({
@@ -169,6 +180,7 @@ class HomeController extends Component {
 export default connect(state => ({
     myAddress: state.app.myAddress,
     myAccountInfo: state.app.myAccountInfo,
-    reportTagArray: state.app.reportTagArray
+    reportTagArray: state.app.reportTagArray,
+    typeNewFeed: state.app.typeNewFeed
 }), ({
 }))(HomeController)

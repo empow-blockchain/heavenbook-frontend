@@ -7,6 +7,7 @@ import LanguageService from '../services/LanguageService'
 import ServerAPI from '../ServerAPI'
 import Utils from '../utils/index'
 import Alert from 'react-s-alert';
+import Link from 'next/link'
 
 class SearchController extends Component {
 
@@ -44,7 +45,7 @@ class SearchController extends Component {
         }
 
         var addresses = await ServerAPI.getAddressByKey(key)
-        var posts = await ServerAPI.getPostByKey(key)
+        var posts = await ServerAPI.getPostByKey(key, this.props.myAddress)
 
         var index = 'All';
 
@@ -77,33 +78,58 @@ class SearchController extends Component {
         })
     }
 
-    
-    onFollowPost = async (postId) => {
+
+    onFollowPost = async (postId, index) => {
         var { myAddress } = this.props
         var result = await ServerAPI.onFollowPost(myAddress, postId)
         if (result.success) {
-            Alert.info(`Follow succes`);
+            var { posts } = this.state
+            posts[index].isFollowed = true
+            this.setState({
+                posts
+            })
         } else {
             Alert.error('Follow error')
         }
     }
 
-    renderPost(post) {
+    onUnfollowPost = async (postId, index) => {
+        var { myAddress } = this.props
+        var result = await ServerAPI.onUnfollowPost(myAddress, postId)
+        if (result.success) {
+            var { posts } = this.state
+            posts[index].isFollowed = false
+            this.setState({
+                posts
+            })
+        } else {
+            Alert.error('Unfollow error')
+        }
+    }
+
+    renderPost(post, index) {
         return (
             <div id="Characters" className="tabcontent">
                 <div className="middle  box-shadow-1">
-                    <div className="top-user">
-                        <figure>
-                            <img src={post.photos[0]["670"]} alt="" style={{ width: 50, borderRadius: 25, height: 50 }} />
-                        </figure>
-                        <div className="info-post">
-                            <span className="name-user">
-                                {post.name.name}
-                            </span>
-                            <span className="date">{Utils.convertDate(post.age.birth)} - {Utils.convertDate(post.age.loss)}</span>
-                        </div>
-                    </div>
-                    <button className="btn btn-save" onClick={() => this.onFollowPost(post.postId)}>{LanguageService.changeLanguage('Follow')}</button>
+
+                    <Link href="/post/[postId]" as={`/post/${post.postId}`}>
+                        <a href={`/post/${post.postId}`}>
+                            <div className="top-user">
+                                <figure>
+                                    <img src={post.photos[0]["670"]} alt="" style={{ width: 50, borderRadius: 25, height: 50 }} />
+                                </figure>
+                                <div className="info-post">
+                                    <span className="name-user">
+                                        {post.name.name}
+                                    </span>
+                                    <span className="date">{Utils.convertDate(post.age.birth)} - {Utils.convertDate(post.age.loss)}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </Link>
+
+                    {post.isFollowed && <button className="btn btn-save" onClick={() => this.onUnfollowPost(post.postId, index)}>{LanguageService.changeLanguage('Unfollow')}</button>}
+                    {!post.isFollowed && <button className="btn btn-save" onClick={() => this.onFollowPost(post.postId, index)}>{LanguageService.changeLanguage('Follow')}</button>}
                 </div>
             </div>
         )
@@ -125,7 +151,6 @@ class SearchController extends Component {
                             </span>
                         </div>
                     </div>
-                    <button className="btn btn-save">{LanguageService.changeLanguage('Follow')}</button>
                 </div>
             </div>
         )
@@ -146,7 +171,7 @@ class SearchController extends Component {
 
                         {index === 'All' && <div>
                             {posts.length > 0 && posts.map((value, index) => {
-                                return this.renderPost(value)
+                                return this.renderPost(value, index)
                             })}
                             {addresses.length > 0 && addresses.map((value, index) => {
                                 return this.renderAddress(value)
@@ -154,7 +179,7 @@ class SearchController extends Component {
                         </div>}
 
                         {index === 'Characters' && posts.length > 0 && posts.map((value, index) => {
-                            return this.renderPost(value)
+                            return this.renderPost(value, index)
                         })}
 
                         {index === 'People' && addresses.length > 0 && addresses.map((value, index) => {

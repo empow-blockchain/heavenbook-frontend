@@ -66,9 +66,9 @@ const ServerAPI = {
         })
     },
 
-    getPostByKey(key, page = 1, pageSize = 20) {
+    getPostByKey(key, myAddress, page = 1, pageSize = 20) {
         return new Promise((resolve, reject) => {
-            Axios.get(`${API_ENDPOINT}/getPostByKey/${key}?page=${page}&pageSize=${pageSize}`)
+            Axios.get(`${API_ENDPOINT}/getPostByKey/${key}?page=${page}&pageSize=${pageSize}&myAddress=${myAddress}`)
                 .then(res => (resolve(res.data)))
                 .catch(error => (reject(error.response.data)))
         })
@@ -117,14 +117,6 @@ const ServerAPI = {
     getPostRightNavbar(myAddress) {
         return new Promise((resolve, reject) => {
             Axios.get(`${API_ENDPOINT}/getPostRightNavbar?address=${myAddress}`)
-                .then(res => (resolve(res.data)))
-                .catch(error => (reject(error.response.data)))
-        })
-    },
-
-    checkFollowed(address, target) {
-        return new Promise((resolve, reject) => {
-            Axios.get(`${API_ENDPOINT}/checkFollowed/${address}/${target}`)
                 .then(res => (resolve(res.data)))
                 .catch(error => (reject(error.response.data)))
         })
@@ -297,6 +289,14 @@ const ServerAPI = {
     onFollowPost(myAddress, postId) {
         return new Promise((resolve, reject) => {
             Axios.post(`${API_ENDPOINT}/onFollowPost`, { myAddress, postId })
+                .then(res => (resolve(res.data)))
+                .catch(error => (reject(error.response.data)))
+        })
+    },
+
+    onUnfollowPost(myAddress, postId) {
+        return new Promise((resolve, reject) => {
+            Axios.post(`${API_ENDPOINT}/onUnfollowPost`, { myAddress, postId })
                 .then(res => (resolve(res.data)))
                 .catch(error => (reject(error.response.data)))
         })

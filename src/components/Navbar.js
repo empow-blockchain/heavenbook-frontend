@@ -4,6 +4,9 @@ import $ from 'jquery'
 import LanguageService from '../services/LanguageService'
 import Link from 'next/link'
 import { EMPOW } from '../constants/index'
+import {
+    setTypeNewFeed,
+} from '../reducers/appReducer'
 
 class Navbar extends Component {
     constructor(props) {
@@ -20,13 +23,25 @@ class Navbar extends Component {
         })
     }
 
+    onChangeTypeNewFeed = (type) => {
+        console.log(type)
+        this.props.setTypeNewFeed(type);
+    }
+
     render() {
         return (
             <div id="navbar" className="col-2">
                 <ul className="parent">
                     <li className="nav-item"><a href="/"><img src="/img/Group 8343.png" />{LanguageService.changeLanguage('Home')}</a></li>
-                    <li className="nav-item"><a href="#"><img src="/img/Group 8344.png" />{LanguageService.changeLanguage('Trending')}</a></li>
-                    <li className="nav-item"><a href="#"><img src="/img/new.png" />{LanguageService.changeLanguage('Newest')}</a></li>
+
+                    <Link href="/" >
+                        <li className="nav-item"><a onClick={() => this.onChangeTypeNewFeed('trending')} href="/"><img src="/img/Group 8344.png" />{LanguageService.changeLanguage('Trending')}</a></li>
+                    </Link>
+
+                    <Link href="/" >
+                        <li className="nav-item"><a onClick={() => this.onChangeTypeNewFeed('all')} href="/"><img src="/img/new.png" />{LanguageService.changeLanguage('Newest')}</a></li>
+                    </Link>
+
                     <li className="nav-item"><a className="with-arrow" href="#"><img src="/img/check.png" />{LanguageService.changeLanguage('Censorship')}</a>
                         <ul className="submenu">
                             <Link href="/verifier/[type]" as="/verifier/Update">
@@ -103,4 +118,5 @@ class Navbar extends Component {
 export default connect(state => ({
     tagTrending: state.app.tagTrending,
 }), ({
+    setTypeNewFeed
 }))(Navbar)

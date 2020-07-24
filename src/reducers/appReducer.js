@@ -5,6 +5,7 @@ export const setMyAccountInfo = createAction('setMyAccountInfo');
 export const setPostDetail = createAction('setPostDetail');
 export const setReportTagArray = createAction('setReportTagArray');
 export const setBlockNumber = createAction('setBlockNumber')
+export const setTypeNewFeed = createAction('setTypeNewFeed');
 
 export const appReducer = createReducer({
     myAddress: false,
@@ -12,6 +13,7 @@ export const appReducer = createReducer({
     postDetail: false,
     reportTagArray: [],
     blockNumber: false,
+    typeNewFeed: 'trending',
 }, {
     [setMyAddress]: (state, { payload }) => {
         state.myAddress = payload;
@@ -27,5 +29,8 @@ export const appReducer = createReducer({
     },
     [setBlockNumber]: (state, { payload }) => {
         state.blockNumber = payload;
+    },
+    [setTypeNewFeed]: (state, { payload }) => {
+        state.typeNewFeed = payload;
     },
 });
