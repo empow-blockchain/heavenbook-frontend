@@ -78,9 +78,9 @@ class SearchController extends Component {
     }
 
     
-    onFollowPost = async () => {
-        var { myAddress, postDetail } = this.props
-        var result = await ServerAPI.onFollowPost(myAddress, postDetail.postId)
+    onFollowPost = async (postId) => {
+        var { myAddress } = this.props
+        var result = await ServerAPI.onFollowPost(myAddress, postId)
         if (result.success) {
             Alert.info(`Follow succes`);
         } else {
@@ -103,7 +103,7 @@ class SearchController extends Component {
                             <span className="date">{Utils.convertDate(post.age.birth)} - {Utils.convertDate(post.age.loss)}</span>
                         </div>
                     </div>
-                    <button className="btn btn-save" onClick={() => this.onFollowPost()}>{LanguageService.changeLanguage('Follow')}</button>
+                    <button className="btn btn-save" onClick={() => this.onFollowPost(post.postId)}>{LanguageService.changeLanguage('Follow')}</button>
                 </div>
             </div>
         )
