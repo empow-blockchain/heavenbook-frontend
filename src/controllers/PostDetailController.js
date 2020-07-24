@@ -35,7 +35,7 @@ class PostDetailController extends Component {
 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         var { postDetail } = this.props
         if (postDetail) {
             var obj = {
@@ -51,16 +51,25 @@ class PostDetailController extends Component {
                 postId: postDetail.postId,
             }
 
+            const dataRight = await this.getdataRight()
+
             this.setState({
-                postDetail: obj
+                postDetail: obj,
+                dataRight
             })
         } else {
             Router.push("/")
         }
     }
 
+    getdataRight = async () => {
+        var { myAddress } = this.props
+        var data = await ServerAPI.getNewFeed(myAddress, 'all', 10, 1)
+        return data
+    }
+
     render() {
-        var { showUpdate, postDetail } = this.state
+        var { showUpdate, postDetail, dataRight } = this.state
         if (!postDetail) {
             return <div></div>
         }
@@ -85,21 +94,27 @@ class PostDetailController extends Component {
                                         {LanguageService.changeLanguage('Recent_memorials')}
                                     </h2>
                                     <div className="list-posts-recent">
-                                        <Link href="/post/[postId]" as={`/post/${postDetail.postId}`}>
-                                            <a href={`/post/${postDetail.postId}`}>
-                                                <div className="top-user">
-                                                    <div className="waper-avatar" style={{ backgroundImage: `url(${postDetail.photos[0]["670"]})`, marginRight: 10 }}>
+                                        {dataRight.map((value, index) => {
+                                            if (value.photos && value.photos.length > 0) {
+                                                return (
+                                                    <Link href="/post/[postId]" as={`/post/${value.postId}`}>
+                                                        <a href={`/post/${value.postId}`}>
+                                                            <div className="top-user">
+                                                                <div className="waper-avatar" style={{ backgroundImage: `url(${value.photos[0]["670"]})`, marginRight: 10 }}>
 
-                                                    </div>
-                                                    <div className="info-post">
-                                                        <span className="name-user">
-                                                            {postDetail.name.name}
-                                                        </span>
-                                                        <span className="date">{Utils.convertDate(postDetail.age.birth)} - {Utils.convertDate(postDetail.age.loss)}</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </Link>
+                                                                </div>
+                                                                <div className="info-post">
+                                                                    <span className="name-user">
+                                                                        {value.name.name}
+                                                                    </span>
+                                                                    <span className="date">{Utils.convertDate(value.age.birth)} - {Utils.convertDate(value.age.loss)}</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </Link>
+                                                )
+                                            }
+                                        })}
                                     </div>
                                 </div>
                             </div>

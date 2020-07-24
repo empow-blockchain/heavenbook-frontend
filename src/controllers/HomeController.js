@@ -28,7 +28,8 @@ class HomeController extends Component {
             activeOptionChild: false,
             page: 1,
             pageSize: 10,
-            isLoadMore: true
+            isLoadMore: true,
+            dataRight: []
         };
     };
 
@@ -36,6 +37,9 @@ class HomeController extends Component {
         document.addEventListener('scroll', this.trackScrolling);
         const data = await this.getNewFeed(this.state.page, this.state.pageSize)
         this.setState({ data })
+
+        const dataRight = await this.getdataRight()
+        this.setState({ dataRight })
     }
 
     componentWillUnmount() {
@@ -104,6 +108,12 @@ class HomeController extends Component {
         return newData
     }
 
+    getdataRight = async () => {
+        var { myAddress } = this.props
+        var data = await ServerAPI.getNewFeed(myAddress, 'all', 10, 1)
+        return data
+    }
+
     onPostSuccess = (post) => {
         var { data } = this.state
         data.unshift(post)
@@ -114,7 +124,7 @@ class HomeController extends Component {
     }
 
     render() {
-        var { data, showAdd } = this.state
+        var { data, showAdd, dataRight } = this.state
         return (
 
             <div className="container">
@@ -145,7 +155,7 @@ class HomeController extends Component {
                                         {LanguageService.changeLanguage('Recent_memorials')}
                                     </h2>
                                     <div className="list-posts-recent">
-                                        {data.map((value, index) => {
+                                        {dataRight.map((value, index) => {
                                             if (value.photos && value.photos.length > 0) {
                                                 return (
                                                     <Link href="/post/[postId]" as={`/post/${value.postId}`}>
