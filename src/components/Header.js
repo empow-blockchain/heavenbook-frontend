@@ -390,7 +390,7 @@ class Header extends Component {
                         </div>
                         {!myAddress && <div className="brand-login">
                             <div className="modal-login">
-                                <a href="#">{LanguageService.changeLanguage('Login')}</a>
+                                <a href="https://chrome.google.com/webstore/detail/bglmfiihjjbjolgjpflcdklccdlcidgn" target="_blank" rel="noopener noreferrer">{LanguageService.changeLanguage('Login')}</a>
                                 <img src="/img/Group 8341.png" alt="" />
                             </div>
                         </div>}
